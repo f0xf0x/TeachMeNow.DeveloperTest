@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeachMeNow.DeveloperTest.BackEnd", "TeachMeNow.DeveloperTest.BackEnd\TeachMeNow.DeveloperTest.BackEnd.csproj", "{B5C0107B-6652-47B0-842D-0664FBF8BACB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeachMeNow.DeveloperTest.Tests", "TeachMeNow.DeveloperTest.Tests\TeachMeNow.DeveloperTest.Tests.csproj", "{83E74104-504C-4A02-B17F-C883269BB1E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B5C0107B-6652-47B0-842D-0664FBF8BACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5C0107B-6652-47B0-842D-0664FBF8BACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5C0107B-6652-47B0-842D-0664FBF8BACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83E74104-504C-4A02-B17F-C883269BB1E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83E74104-504C-4A02-B17F-C883269BB1E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83E74104-504C-4A02-B17F-C883269BB1E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83E74104-504C-4A02-B17F-C883269BB1E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
