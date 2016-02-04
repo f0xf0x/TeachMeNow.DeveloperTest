@@ -130,6 +130,7 @@
     <Content Include="Angular\app.js" />
     <Content Include="Angular\classService.js" />
     <Content Include="Angular\homeController.js" />
+    <Content Include="Angular\templates\home.html" />
     <Content Include="Angular\userService.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />

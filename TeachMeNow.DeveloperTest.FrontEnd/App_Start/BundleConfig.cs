@@ -16,6 +16,7 @@ namespace TeachMeNow.DeveloperTest.FrontEnd
 
             bundles.Add(new ScriptBundle("~/bundles/angular")
                 .Include("~/Scripts/angular.js")
+                .Include("~/Scripts/angular-route.js")
                 .IncludeDirectory("~/Angular", "*.js")
             );
 
