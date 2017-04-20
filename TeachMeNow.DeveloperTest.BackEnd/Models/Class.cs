@@ -50,7 +50,7 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Models
         /// The student.
         /// </value>
         [Required]
-        public int Student { get; set; }
+        public int StudentId { get; set; }
 
         /// <summary>
         /// Gets or sets the tutor.
@@ -59,6 +59,6 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Models
         /// The tutor.
         /// </value>
         [Required]
-        public int Tutor { get; set; }
+        public int TutorId { get; set; }
     }
 }

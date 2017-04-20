@@ -24,42 +24,64 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Models
 
             this.Tables.CreateRelation<User, int, Class, int>(
                 userTable.PrimaryKeyIndex,
-                classTable.CreateIndex(new RedBlackTreeIndexFactory(), x => x.Student),
+                classTable.CreateIndex(new RedBlackTreeIndexFactory(), x => x.StudentId),
                 x => x, x => x, new RelationOptions());
 
             this.Users = userTable;
             this.Classes = classTable;
 
-
             //Seed database with Users
-            //Students
+            //Users
+            var user1 = new User
+            {
+                Name = "User 1",
+                Email = "user1@example.com",
+                Password = "password1",
+                IsTutor = false
+            };
             this.Users.Insert(
-                new User
-                {
-                    Name = "Student 1",
-IsTutor = false
-                });
+                user1);
+            var user2 = new User
+            {
+                Name = "User 2",
+                Email = "user2@example.com",
+                Password = "password2",
+                IsTutor = false
+            };
             this.Users.Insert(
-                new User
-                {
-                    Name = "Student 2",
-                    IsTutor = false
-                });
+                user2);
 
             //Tutors
+            var tutor1 = new User
+            {
+                Name = "Tutor 1",
+                Email = "tutor1@example.com",
+                Password = "pass_t1",
+                IsTutor = true
+            };
             this.Users.Insert(
-                new User
-                {
-                    Name = "Tutor 1",
-                    IsTutor = true
-                });
+                tutor1);
 
+            var tutor2 = new User
+            {
+                Name = "Tutor 2",
+                Email = "tutor2@example.com",
+                Password = "pass_t2",
+                IsTutor = true
+            };
             this.Users.Insert(
-                new User
-                {
-                    Name = "Tutor 2",
-                    IsTutor = true
-                });
+                tutor2);
+
+            this.Classes.Insert(new Class() {
+                StudentId = user1.Id,
+                TutorId = tutor1.Id
+            });
+            
+            this.Classes.Insert(new Class() {
+                StudentId = user2.Id,
+                TutorId = tutor2.Id
+            });
+            
         }
 
         public ITable<User> Users { get; private set; }
