@@ -9,15 +9,23 @@
 
     function factory($http, baseUrl) {
         var service = {
-            getClasses: getClasses
+            getClasses: getClasses,
+            updateClass: updateClass
         };
 
-        return service;
 
+        var url = baseUrl + '/api/classes';
         function getClasses(startDate,endDate) {
-            var url = baseUrl + '/api/classes';
             var classes = $http.get(url);
             return classes;
         }
+
+        function updateClass(cm) {
+            var putUrl = url + "/" + cm.Id;
+            var res = $http.put(putUrl,cm);
+            return res;
+        }
+
+        return service;
     }
 })();

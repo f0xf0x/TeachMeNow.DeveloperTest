@@ -102,7 +102,21 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <param name="updateClass">The update class.</param>
-        public void Put(int id, [FromBody] Class updateClass) {
+        public IHttpActionResult Put(int id, [FromBody] Class model) {
+            var dbM = db.Classes.SingleOrDefault(t => t.Id == id);
+            if(dbM == null) {
+                return NotFound();
+            }
+            if (model.EndTime != default(DateTime)) {
+                dbM.EndTime = model.EndTime;
+            }
+            if (model.StartTime != default(DateTime)) {
+                dbM.StartTime = model.StartTime;
+            }
+
+            db.Classes.Update(dbM);
+
+            return Ok();
         }
 
         // DELETE: api/Classes/5

@@ -19,12 +19,19 @@
                 controller: 'Home.IndexController',
                 controllerAs: 'vm'
             })
+            .state('new', {
+                url: '/new',
+                templateUrl: 'angular/event/create.view.html',
+                controller: 'Event.IndexController',
+                controllerAs: 'vm'
+            })
             .state('login', {
                 url: '/login',
                 templateUrl: 'angular/login/index.view.html',
                 controller: 'Login.IndexController',
                 controllerAs: 'vm'
-            }).state('logout', {
+            })
+            .state('logout', {
                 url: '/logout',
                 controller: function ($state, AuthenticationService) {
                     AuthenticationService.Logout();

@@ -1,7 +1,9 @@
 ﻿<ng-include src="'angular/shared/header.html'" />
 
-<div ng-init="home.activate()">
-    <h2>Classes</h2>
+    <div class="container body-content">
+<div  ng-init="home.activate()">
+    <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="home.events" calendar="classesCalendar"></div> 
+    <h2>Classes list</h2>
     <div ng-repeat="class in home.classes">
         <div class="container">
             <div class="row">
@@ -14,7 +16,6 @@
             </div>
         </div>
     </div>
-
-    <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="hoem.events" calendar="classesCalendar"></div> 
+</div>
 </div>
 
