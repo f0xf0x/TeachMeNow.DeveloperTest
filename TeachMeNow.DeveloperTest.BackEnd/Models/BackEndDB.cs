@@ -73,13 +73,33 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Models
                 tutor2);
 
             this.Classes.Insert(new Class() {
+                Subject = "Math - Lesson 1",
                 StudentId = user1.Id,
-                TutorId = tutor1.Id
+                TutorId = tutor1.Id,
+                StartTime = DateTime.Now.AddDays(1),
+                EndTime =  DateTime.Now.AddDays(1).AddHours(1)
+            });
+            this.Classes.Insert(new Class() {
+                Subject = "Math - Lesson 2",
+                StudentId = user1.Id,
+                TutorId = tutor1.Id,
+                StartTime = DateTime.Now.AddDays(2),
+                EndTime =  DateTime.Now.AddDays(2).AddHours(2)
             });
             
             this.Classes.Insert(new Class() {
+                Subject = "Physics - Lesson 7",
                 StudentId = user2.Id,
-                TutorId = tutor2.Id
+                TutorId = tutor2.Id,
+                StartTime = DateTime.Now.AddDays(2),
+                EndTime =  DateTime.Now.AddDays(2).AddHours(1)
+            });
+            this.Classes.Insert(new Class() {
+                Subject = "Physics - Lesson 8",
+                StudentId = user2.Id,
+                TutorId = tutor2.Id,
+                StartTime = DateTime.Now.AddDays(3),
+                EndTime =  DateTime.Now.AddDays(3).AddHours(1)
             });
             
         }

@@ -1,3 +1,9 @@
 ﻿<div ng-app="app" ng-controller="Home.IndexController as home">
-    <ui-view></ui-view>
+    <div class="container body-content">
+        <ui-view></ui-view>
+        <hr/>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
 </div>

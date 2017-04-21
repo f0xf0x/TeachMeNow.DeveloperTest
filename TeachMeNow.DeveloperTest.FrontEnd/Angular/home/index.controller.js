@@ -20,7 +20,5 @@
                 alert('Failed: ' + reason);
             });;
         }
-
-        activate();
     }
 })();

@@ -24,6 +24,13 @@
                 templateUrl: 'angular/login/index.view.html',
                 controller: 'Login.IndexController',
                 controllerAs: 'vm'
+            }).state('logout', {
+                url: '/logout',
+                controller: function ($state, AuthenticationService) {
+                    AuthenticationService.Logout();
+                    $state.go("login");
+
+                }
             });
     }
 
