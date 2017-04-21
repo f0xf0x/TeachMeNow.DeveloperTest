@@ -24,14 +24,23 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(nameof(user.Name), user.Name));
             identity.AddClaim(new Claim(nameof(user.Email), user.Email));
-            identity.AddClaim(new Claim(nameof(User.Id),user.Id.ToString()));
-            identity.AddClaim(new Claim("role", user.IsTutor?"tutor":"student"));
+            identity.AddClaim(new Claim(nameof(User.Id), user.Id.ToString()));
+            identity.AddClaim(new Claim("role", user.IsTutor ? "tutor" : "student"));
 
             context.Validated(identity);
         }
 
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context) {
             context.Validated();
+        }
+
+        public override Task MatchEndpoint(OAuthMatchEndpointContext context) {
+            if(context.IsTokenEndpoint && context.Request.Method == "OPTIONS") {
+                context.RequestCompleted();
+                return Task.FromResult(0);
+            }
+
+            return base.MatchEndpoint(context);
         }
     }
 }

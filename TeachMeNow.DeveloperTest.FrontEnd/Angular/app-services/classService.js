@@ -15,8 +15,9 @@
         return service;
 
         function getClasses(startDate,endDate) {
-            
-            return $http.get(baseUrl + 'api/classes');
+            var url = baseUrl + '/api/classes';
+            var classes = $http.get(url);
+            return classes;
         }
     }
 })();

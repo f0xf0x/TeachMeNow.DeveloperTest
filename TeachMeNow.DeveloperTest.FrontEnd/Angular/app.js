@@ -5,7 +5,7 @@
         .module('app', ['ui.router', 'ngMessages', 'ngStorage'])
         .config(config)
         .run(run);
-    app.value('baseUrl', 'http://localhost:55407/');
+    app.value('baseUrl', 'http://localhost:50020');
 
     function config($stateProvider, $urlRouterProvider) {
         // default route

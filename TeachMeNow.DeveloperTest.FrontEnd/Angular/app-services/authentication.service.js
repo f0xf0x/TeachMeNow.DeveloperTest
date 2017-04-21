@@ -5,7 +5,7 @@
         .module("app")
         .factory('AuthenticationService', Service);
 
-    function Service($http, $localStorage) {
+    function Service($http, $localStorage, baseUrl) {
         var service = {};
 
         service.Login = Login;
@@ -14,28 +14,35 @@
         return service;
 
         function Login(username, password, callback) {
-            $http({
+            var body = $.param({ username: username, password: password, grant_type: "password" });
+            var httpParams = {
                 method: "post",
-                url: '/token',
-                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                data: $.param({ username: username, password: password })
-            })
-                .success(function (response) {
-                    // login successful if there's a token in the response
-                    if (response.token) {
-                        // store username and token in local storage to keep user logged in between page refreshes
-                        $localStorage.currentUser = { username: username, token: response.token };
+                url: baseUrl + '/token',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                data: body
+            };
+            $http(httpParams).then(function successCallback(response) {
+                // login successful if there's a token in the response
+                var accessToken = response.data.access_token;
+                if (accessToken) {
+                    // store username and token in local storage to keep user logged in between page refreshes
+                    $localStorage.currentUser = { username: username, token: accessToken };
 
-                        // add jwt token to auth header for all requests made by the $http service
-                        $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
+                    // add jwt token to auth header for all requests made by the $http service
+                    $http.defaults.headers.common.Authorization = 'Bearer ' + accessToken;
 
-                        // execute callback with true to indicate successful login
-                        callback(true);
-                    } else {
-                        // execute callback with false to indicate failed login
-                        callback(false);
-                    }
-                });
+                    // execute callback with true to indicate successful login
+                    callback(true);
+                } else {
+                    // execute callback with false to indicate failed login
+                    callback(false);
+                }
+            }, function errorCallback(response) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+                console.log(response.body);
+                callback(false);
+            });
         }
 
         function Logout() {

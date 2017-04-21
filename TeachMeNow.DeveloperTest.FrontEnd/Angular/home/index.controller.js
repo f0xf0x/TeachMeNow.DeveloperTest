@@ -20,5 +20,7 @@
                 alert('Failed: ' + reason);
             });;
         }
+
+        activate();
     }
 })();

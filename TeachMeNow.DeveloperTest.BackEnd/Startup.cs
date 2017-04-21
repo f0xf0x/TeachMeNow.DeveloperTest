@@ -40,5 +40,6 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
         }
+        
     }
 }

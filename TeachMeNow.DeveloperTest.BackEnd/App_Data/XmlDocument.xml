@@ -486,6 +486,12 @@
             Account controller to provide user registration funcionality
             </summary>
         </member>
+        <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.BaseApiController.Options">
+            <summary>
+            Workaround for CORS
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:TeachMeNow.DeveloperTest.BackEnd.Controllers.ClassesController">
             <summary>
             </summary>
