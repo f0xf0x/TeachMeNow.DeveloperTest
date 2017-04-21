@@ -14,10 +14,15 @@ namespace TeachMeNow.DeveloperTest.FrontEnd
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new StyleBundle("~/bundles/npm_css").Include("~/bower_components/fullcalendar/dist/fullcalendar.css"));
             bundles.Add(new ScriptBundle("~/bundles/npm").Include(
                 "~/node_modules/angular-ui-router/release/angular-ui-router.js",
                 "~/node_modules/angular-messages/angular-messages.js",
-                "~/node_modules/ngstorage/ngStorage.js"
+                "~/node_modules/ngstorage/ngStorage.js",
+                "~/bower_components/moment/moment.js",
+                "~/bower_components/angular-ui-calendar/src/calendar.js",
+                "~/bower_components/fullcalendar/dist/fullcalendar.js",
+                "~/bower_components/fullcalendar/dist/gcal.jss"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/angular")

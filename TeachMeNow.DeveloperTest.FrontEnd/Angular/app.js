@@ -2,7 +2,7 @@
     'use strict';
 
     var app = angular
-        .module('app', ['ui.router', 'ngMessages', 'ngStorage'])
+        .module('app', ['ui.router', 'ngMessages', 'ngStorage', 'ui.calendar'])
         .config(config)
         .run(run);
     app.value('baseUrl', 'http://localhost:50020');

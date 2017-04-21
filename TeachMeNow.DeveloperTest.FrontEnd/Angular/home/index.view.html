@@ -1,4 +1,4 @@
-﻿<ng-include src="'angular/shared/header.html'"/>
+﻿<ng-include src="'angular/shared/header.html'" />
 
 <div ng-init="home.activate()">
     <h2>Classes</h2>
@@ -6,12 +6,15 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                Class {{class.Id}}: {{class.Subject}}
-                </ div>
+                    Class {{class.Id}}: {{class.Subject}}
+                </div>
                 <div class="col">
                     {{class.StartTime}} - {{class.EndTime}}
                 </div>
             </div>
         </div>
     </div>
-    </div>
+
+    <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="hoem.events" calendar="classesCalendar"></div> 
+</div>
+
