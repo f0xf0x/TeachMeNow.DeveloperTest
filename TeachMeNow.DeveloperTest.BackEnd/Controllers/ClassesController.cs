@@ -48,15 +48,16 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// <param name="newClass">The new class.</param>
         public IHttpActionResult Post([FromBody] Class newClass) {
             if(newClass == null) {
-                ModelState.AddModelError(nameof(Class),new ArgumentNullException(nameof(Class),"Cannot create empty class"));
+                addModelError(nameof(Class),"Cannot create empty class");
             }
             var tutorBusy = db.Classes.Any(t => t.TutorId == newClass.TutorId &&
                                                 (
                                                     (t.StartTime > newClass.StartTime && t.StartTime < newClass.EndTime) ||
                                                     (t.EndTime > newClass.StartTime && t.EndTime < newClass.EndTime)
                                                 ));
+
             if(tutorBusy) {
-                ModelState.AddModelError(nameof(newClass.StartTime),new ArgumentOutOfRangeException(nameof(newClass.StartTime), "Cannot book a class, tutor is busy"));
+                addModelError(nameof(newClass.StartTime), "Cannot book a class, tutor is busy");
             }
 
             var studentBusy = db.Classes.Any(t => t.StudentId == newClass.StudentId &&
@@ -65,23 +66,23 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
                                                       (t.EndTime > newClass.StartTime && t.EndTime < newClass.EndTime)
                                                   ));
             if(studentBusy) {
-                ModelState.AddModelError(nameof(newClass.StartTime), new ArgumentOutOfRangeException(nameof(newClass.StartTime), "Cannot book a class, student is busy"));
+                addModelError(nameof(newClass.StartTime), "Cannot book a class, student is busy");
             }
             if(currentUser.IsTutor && newClass.TutorId > 0 && newClass.TutorId != currentUser.Id) {
                 addModelError(nameof(newClass.TutorId), "Cannot book a class for different user");
             }
             if(!currentUser.IsTutor && newClass.StudentId > 0 && newClass.StudentId != currentUser.Id) {
-                 ModelState.AddModelError(nameof(newClass.StudentId),new ArgumentOutOfRangeException(nameof(newClass.StudentId), "Cannot book a class for different user"));
+                 addModelError(nameof(newClass.StudentId), "Cannot book a class for different user");
             }
 
             if(currentUser.IsTutor) {
                 if(!db.Users.Any(t => !t.IsTutor && t.Id == newClass.StudentId)) {
-                     ModelState.AddModelError(nameof(newClass.StudentId),new ArgumentOutOfRangeException(nameof(newClass.StudentId), "Cannot book a class: student doesn't exists"));
+                     addModelError(nameof(newClass.StudentId), "Cannot book a class: student doesn't exists");
                 }
                 newClass.TutorId = currentUser.Id;
             } else {
                 if(!db.Users.Any(t => t.IsTutor && t.Id == newClass.TutorId)) {
-                     ModelState.AddModelError(nameof(newClass.StudentId),new ArgumentOutOfRangeException(nameof(newClass.StudentId), "Cannot book a class: tutor doesn't exists"));
+                     addModelError(nameof(newClass.StudentId), "Cannot book a class: tutor doesn't exists");
                 }
                 newClass.StudentId = currentUser.Id;
             }

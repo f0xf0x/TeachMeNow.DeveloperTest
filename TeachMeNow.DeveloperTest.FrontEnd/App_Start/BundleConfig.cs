@@ -14,10 +14,19 @@ namespace TeachMeNow.DeveloperTest.FrontEnd
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/npm").Include(
+                "~/node_modules/angular-ui-router/release/angular-ui-router.js",
+                "~/node_modules/angular-messages/angular-messages.js",
+                "~/node_modules/ngstorage/ngStorage.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/angular")
                 .Include("~/Scripts/angular.js")
                 .Include("~/Scripts/angular-route.js")
                 .IncludeDirectory("~/Angular", "*.js")
+                .IncludeDirectory("~/Angular/app-services", "*.js")
+                .IncludeDirectory("~/Angular/home", "*.js")
+                .IncludeDirectory("~/Angular/login", "*.js")
             );
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
@@ -32,6 +41,8 @@ namespace TeachMeNow.DeveloperTest.FrontEnd
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+
         }
     }
 }

@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "devDependencies": {},
+  "dependencies": {
+    "angular-messages": "^1.6.4",
+    "angular-ui-router": "^0.4.2",
+    "ngstorage": "^0.3.11"
+  }
+}

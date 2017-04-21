@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('tmnApp')
+        .module("app")
         .factory('userService', factory);
 
     factory.$inject = ['$http', 'baseUrl'];
