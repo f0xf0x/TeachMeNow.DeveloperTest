@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Security.Principal;
 using System.Web.Http;
 
 using TeachMeNow.DeveloperTest.BackEnd.Models;
@@ -11,8 +12,9 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
 
         protected User currentUser {
             get {
-                ClaimsPrincipal principal = Request.GetRequestContext().Principal as ClaimsPrincipal;
-                return new User(principal);
+                IPrincipal principal = Request.GetRequestContext().Principal;
+                ClaimsPrincipal claimsPrincipal = principal as ClaimsPrincipal;
+                return new User(claimsPrincipal);
             }
         }
         protected void addModelError(string name, string message) {

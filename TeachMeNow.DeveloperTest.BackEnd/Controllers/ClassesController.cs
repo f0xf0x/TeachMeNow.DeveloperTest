@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
 
 using TeachMeNow.DeveloperTest.BackEnd.Models;
 
@@ -48,7 +49,9 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// <param name="newClass">The new class.</param>
         public IHttpActionResult Post([FromBody] Class newClass) {
             if(newClass == null) {
+                ModelState.Clear();
                 addModelError(nameof(Class),"Cannot create empty class");
+                return BadRequest(ModelState);
             }
             var tutorBusy = db.Classes.Any(t => t.TutorId == newClass.TutorId &&
                                                 (
@@ -80,11 +83,13 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
                      addModelError(nameof(newClass.StudentId), "Cannot book a class: student doesn't exists");
                 }
                 newClass.TutorId = currentUser.Id;
+                removePropertyError(nameof(Class.TutorId),nameof(newClass));
             } else {
                 if(!db.Users.Any(t => t.IsTutor && t.Id == newClass.TutorId)) {
                      addModelError(nameof(newClass.StudentId), "Cannot book a class: tutor doesn't exists");
                 }
                 newClass.StudentId = currentUser.Id;
+                removePropertyError(nameof(Class.StudentId),nameof(newClass));
             }
 
             if(!ModelState.IsValid) {
@@ -95,6 +100,21 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
 
         }
 
+        private void removePropertyError(string name, string root) {
+            var errors =ModelState[root]?.Errors;
+            if(errors == null) {
+                return;
+            }
+                    var errorsRoRemove=new List<ModelError>();
+            foreach(ModelError error in errors) {
+                if(error.ErrorMessage.Contains(name) || (error.Exception?.Message.Contains(name)??false)) {
+                    errorsRoRemove.Add(error);
+                }
+            }
+            foreach(ModelError error in errorsRoRemove) {
+                errors.Remove(error);
+            }
+        }
 
         // PUT: api/Classes/5
         /// <summary>

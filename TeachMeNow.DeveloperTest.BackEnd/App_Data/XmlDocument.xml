@@ -549,7 +549,7 @@
             </summary>
             <param name="database">The database.</param>
         </member>
-        <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.UsersController.Get">
+        <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.UsersController.Get(System.Boolean)">
             <summary>
             Gets a list of Users.
             </summary>
@@ -648,6 +648,13 @@
             <summary>
             User model for authentication
             </summary>
+        </member>
+        <member name="M:TeachMeNow.DeveloperTest.BackEnd.SimpleAuthorizationServerProvider.createProperties(System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Create properties which will be returned to client in response.
+            That's public information!
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

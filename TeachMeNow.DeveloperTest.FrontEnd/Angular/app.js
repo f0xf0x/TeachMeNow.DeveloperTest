@@ -2,7 +2,7 @@
     'use strict';
 
     var app = angular
-        .module('app', ['ui.router', 'ngMessages', 'ngStorage', 'ui.calendar'])
+        .module('app', ['ui.router', 'ngMessages', 'ngStorage', 'ui.calendar','ui.bootstrap.datetimepicker'])
         .config(config)
         .run(run);
     app.value('baseUrl', 'http://localhost:50020');
@@ -54,6 +54,7 @@
             if (restrictedPage && !$localStorage.currentUser) {
                 $location.path('/login');
             }
+            $rootScope.userIsTutor = $localStorage.currentUser
         });
     }
 })();

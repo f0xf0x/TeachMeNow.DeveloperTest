@@ -32,7 +32,7 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions() {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
-                AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(8),
                 Provider = new SimpleAuthorizationServerProvider(db)
             };
 

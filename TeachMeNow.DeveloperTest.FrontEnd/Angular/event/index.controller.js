@@ -3,79 +3,42 @@
 
     angular
         .module("app")
-        .controller('Home.IndexController', Controller);
+        .controller('Event.IndexController', Controller);
 
 
-    function Controller($scope, uiCalendarConfig, classService) {
+    function Controller(classService, userService, $localStorage) {
         /* jshint validthis:true */
         var vm = this;
 
-        vm.classes = {};
-        vm.events = [];
         vm.activate = activate;
-        vm.resize = resize;
-
-        $scope.uiConfig = {
-            calendar: {
-                height: 500,
-                editable: true,
-                aspectRatio: 2,
-                header: {
-                    left: 'title',
-                    center: '',
-                    right: 'today month,agendaWeek prev,next'
-                },
-                dayClick: $scope.setCalDate,
-                background: '#f26522',
-                eventDrop: vm.resize,
-                eventResize: vm.resize
-            }
-        };
-
+        vm.createEvent = createEvent;
+        vm.partners = [];
+        vm.isTutor = $localStorage.currentUser.userIsTutor;
+        vm.partnerLabel = vm.isTutor ? "Choose student" : "Choose tutor";
 
         function activate() {
-            classService.getClasses().then(function (response) {
-                vm.classes = response.data;
-                /* config object */
-                uiCalendarConfig.calendars['classesCalendar'].fullCalendar('removeEventSources');
-                vm.events.slice(0);
-                var len = vm.classes.length;
+            vm.partners.slice(0);
+            userService.getPartners().then(function (response) {
+                var partners = response.data;
+                var len = partners.length;
                 for (var i = 0; i < len; i++) {
-                    var item = vm.classes[i];
-                    vm.events.push({
-                        id: item.Id,
-                        title: item.Subject,
-                        start: new Date(item.StartTime),
-                        end: new Date(item.EndTime)
-                    });
+                    vm.partners.push(partners[i]);
                 }
-                uiCalendarConfig.calendars['classesCalendar'].fullCalendar('addEventSource', vm.events);
-
-                //uiCalendarConfig.calendars.classesCalendar.fullCalendar('renderEvents');
-
-
-            }, function (reason) {
-                alert('Failed: ' + reason);
             });
         }
 
-        function resize(event, delta, revertFunc, jsEvent, ui, view) {
-            var classModel = {
-                Id: event.id,
-                Subject: event.title,
-                StartTime: event.start,
-                EndTime: event.end
-            };
-            classService.updateClass(classModel).then(function (response) {
-                if (!response) {
-                    revertFunc();
-                    return;
-                }
-                activate();
-            }, function (reason) {
-                alert('Failed: ' + reason);
-            });
+        function createEvent() {
+            var partner = vm.selectedPartner.Id;
+            var event
+            if (vm.isTutor) {
+                event = { subject: vm.subject, StudentId: partner, startTime: vm.startTime, endTime: vm.endTime };
+            } else {
+                event = { subject: vm.subject, TutorId: partner, startTime: vm.startTime, endTime: vm.endTime };
+            }
 
+            classService.createClass(event).then(function () {
+                console.log("Creating event");
+            });
         }
     }
 })();

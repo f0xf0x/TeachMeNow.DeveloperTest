@@ -12,10 +12,11 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Models
     public class User
     {
         public User(ClaimsPrincipal principal) {
-            this.Id = Convert.ToInt32(principal.Claims.Single(c => c.Type == nameof(Id)).Value);
-            this.Name = principal.Claims.Single(c => c.Type == nameof(Name)).Value;
-            this.Email = principal.Claims.Single(c => c.Type == nameof(Email)).Value;
-            this.IsTutor = principal.Claims.Single(c => c.Type == "role").Value == "tutor";
+            string claimsId = principal.Claims.SingleOrDefault(c => c.Type == nameof(Id))?.Value;
+            this.Id = Convert.ToInt32(claimsId);
+            this.Name = principal.Claims.SingleOrDefault(c => c.Type == nameof(Name))?.Value;
+            this.Email = principal.Claims.SingleOrDefault(c => c.Type == nameof(Email))?.Value;
+            this.IsTutor = principal.Claims.SingleOrDefault(c => c.Type == "role")?.Value == "tutor";
         }
 
         public User() {

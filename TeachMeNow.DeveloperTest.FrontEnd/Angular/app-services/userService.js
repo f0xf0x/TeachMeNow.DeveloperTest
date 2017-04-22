@@ -9,13 +9,20 @@
 
     function factory($http, baseUrl) {
         var service = {
-            getUsers: getUsers
+            getUsers: getUsers,
+            getPartners: getPartners
         };
-
-        return service;
+        var url = baseUrl + '/api/users';
 
         function getUsers() {
-            return $http.get(baseUrl + 'api/users');
+            return $http.get(url);
         }
+
+        function getPartners() {
+            return $http.get(url, {
+                params:{onlyPartners:true}
+            });
+        }
+        return service;
     }
 })();

@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {},
   "dependencies": {
+    "angular-bootstrap-datetimepicker": "^1.1.4",
     "angular-messages": "^1.6.4",
     "angular-ui-router": "^0.4.2",
     "ngstorage": "^0.3.11"

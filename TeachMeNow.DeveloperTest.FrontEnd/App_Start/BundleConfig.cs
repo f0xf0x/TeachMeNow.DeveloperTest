@@ -14,7 +14,9 @@ namespace TeachMeNow.DeveloperTest.FrontEnd
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
-            bundles.Add(new StyleBundle("~/bundles/npm_css").Include("~/bower_components/fullcalendar/dist/fullcalendar.css"));
+            bundles.Add(new StyleBundle("~/bundles/npm_css").Include(
+                "~/bower_components/fullcalendar/dist/fullcalendar.css",
+                "~/node_modules/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"));
             bundles.Add(new ScriptBundle("~/bundles/npm").Include(
                 "~/node_modules/angular-ui-router/release/angular-ui-router.js",
                 "~/node_modules/angular-messages/angular-messages.js",
@@ -22,6 +24,8 @@ namespace TeachMeNow.DeveloperTest.FrontEnd
                 "~/bower_components/moment/moment.js",
                 "~/bower_components/angular-ui-calendar/src/calendar.js",
                 "~/bower_components/fullcalendar/dist/fullcalendar.js",
+                "~/node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.js",
+                "~/node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js",
                 "~/bower_components/fullcalendar/dist/gcal.jss"
                 ));
 
@@ -31,6 +35,7 @@ namespace TeachMeNow.DeveloperTest.FrontEnd
                 .IncludeDirectory("~/Angular", "*.js")
                 .IncludeDirectory("~/Angular/app-services", "*.js")
                 .IncludeDirectory("~/Angular/home", "*.js")
+                .IncludeDirectory("~/Angular/event", "*.js")
                 .IncludeDirectory("~/Angular/login", "*.js")
             );
 

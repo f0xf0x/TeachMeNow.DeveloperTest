@@ -10,9 +10,9 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers
     /// 
     /// </summary>
     /// <seealso cref="System.Web.Http.ApiController" />
-    public class UsersController : ApiController
+    public class UsersController : BaseApiController
     {
-        BackEndDB _database = null;
+        BackEndDB db = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersController"/> class.
@@ -20,16 +20,19 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers
         /// <param name="database">The database.</param>
         public UsersController(BackEndDB database)
         {
-            _database = database;
+            db = database;
         }
 
         /// <summary>
         /// Gets a list of Users.
         /// </summary>
         /// <returns>IEnumerable&lt;User&gt;</returns>
-        public IEnumerable<User> Get()
+        public IEnumerable<User> Get([FromUri]bool onlyPartners = false)
         {
-            return _database.Users.AsEnumerable();
+            if(onlyPartners) {
+                return db.Users.Where(t => t.IsTutor != currentUser.IsTutor).AsEnumerable();
+            }
+            return db.Users.AsEnumerable();
         }
 
         /// <summary>
@@ -39,7 +42,7 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers
         /// <returns></returns>
         public User Get(int id)
         {
-            return _database.Users.FirstOrDefault(x => x.Id == id);
+            return db.Users.FirstOrDefault(x => x.Id == id);
         }
     }
 
