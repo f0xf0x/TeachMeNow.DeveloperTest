@@ -54,8 +54,10 @@
                 //uiCalendarConfig.calendars.classesCalendar.fullCalendar('renderEvents');
 
 
-            }, function (reason) {
-                alert('Failed: ' + reason);
+            }, function errorCallback(response) {
+                vm.error = "Operation was cancelled\n";
+                vm.error += "HTTP " + response.status + "\n" + response.data;
+                alert(vm.error);
             });
         }
 

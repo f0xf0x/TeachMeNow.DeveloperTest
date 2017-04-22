@@ -6,7 +6,7 @@
         .controller('Event.IndexController', Controller);
 
 
-    function Controller(classService, userService, $localStorage) {
+    function Controller(classService, userService, $location, $localStorage) {
         /* jshint validthis:true */
         var vm = this;
 
@@ -15,6 +15,7 @@
         vm.partners = [];
         vm.isTutor = $localStorage.currentUser.userIsTutor;
         vm.partnerLabel = vm.isTutor ? "Choose student" : "Choose tutor";
+        vm.loading = false;
 
         function activate() {
             vm.partners.slice(0);
@@ -28,6 +29,7 @@
         }
 
         function createEvent() {
+            vm.loading = true;
             var partner = vm.selectedPartner.Id;
             var event
             if (vm.isTutor) {
@@ -37,7 +39,12 @@
             }
 
             classService.createClass(event).then(function () {
-                console.log("Creating event");
+                vm.loading = false;
+                $location.path("/home");
+            }, function errorCallback(response) {
+                vm.loading = false;
+                vm.error = "Operation was cancelled\n";
+                vm.error += "HTTP " + response.status + "\n" + response.data;
             });
         }
     }

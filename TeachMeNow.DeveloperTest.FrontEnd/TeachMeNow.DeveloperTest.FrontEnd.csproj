@@ -125,6 +125,7 @@
     <Content Include="Angular\app-services\authentication.service.js" />
     <Content Include="Angular\app.js" />
     <Content Include="Angular\app-services\classService.js" />
+    <Content Include="Angular\event\index.view.html" />
     <Content Include="Angular\event\index.controller.js" />
     <Content Include="Angular\event\create.view.html" />
     <Content Include="Angular\home\index.controller.js" />
