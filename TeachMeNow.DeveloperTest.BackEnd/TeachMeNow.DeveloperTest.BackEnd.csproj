@@ -207,6 +207,7 @@
     </Compile>
     <Compile Include="Models\BackEndDB.cs" />
     <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\ClassViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Tutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

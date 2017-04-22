@@ -25,6 +25,18 @@
                 controller: 'Event.IndexController',
                 controllerAs: 'vm'
             })
+            .state('view', {
+                url: '/class/:classid',
+                templateUrl: 'angular/event/index.view.html',
+                controller: 'Event.IndexController',
+                controllerAs: 'vm'
+            })
+            .state('update', {
+                url: '/edit/:classid',
+                templateUrl: 'angular/event/update.view.html',
+                controller: 'Event.IndexController',
+                controllerAs: 'vm'
+            })
             .state('login', {
                 url: '/login',
                 templateUrl: 'angular/login/index.view.html',

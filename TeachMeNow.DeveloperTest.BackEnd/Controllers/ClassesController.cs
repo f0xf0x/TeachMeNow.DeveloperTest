@@ -27,8 +27,8 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public IEnumerable<Class> Get() {
-            return db.Classes.Where(t => t.StudentId == currentUser.Id);
+        public IEnumerable<ClassViewModel> Get() {
+            return db.Classes.Where(t => t.StudentId == currentUser.Id).Select(t=>new ClassViewModel(t));
         }
 
         // GET: api/Classes/5
@@ -38,8 +38,10 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public Class Get(int id) {
-            return Get().SingleOrDefault(t => t.Id == id);
+        public ClassViewModel Get(int id) {
+            var classes = db.Classes.Where(t => t.StudentId == currentUser.Id);
+            var cl= classes.SingleOrDefault(t => t.Id == id);
+            return new ClassViewModel(cl);
         }
 
         // POST: api/Classes

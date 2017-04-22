@@ -9,6 +9,7 @@
 
     function factory($http, baseUrl) {
         var service = {
+            getClass: getClass,
             getClasses: getClasses,
             updateClass: updateClass,
             createClass: createClass
@@ -16,6 +17,10 @@
 
 
         var url = baseUrl + '/api/classes';
+        function getClass(id,startDate, endDate) {
+            var classObj = $http.get(url+"/"+id);
+            return classObj;
+        }
         function getClasses(startDate, endDate) {
             var classes = $http.get(url);
             return classes;
