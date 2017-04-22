@@ -12,7 +12,8 @@
             getClass: getClass,
             getClasses: getClasses,
             updateClass: updateClass,
-            createClass: createClass
+            createClass: createClass,
+            deleteClass:deleteClass
         };
 
 
@@ -33,6 +34,12 @@
         }
         function createClass(cm) {
             var res = $http.post(url, cm);
+            return res;
+        }
+
+        function deleteClass(id) {
+            var deleteUrl = url + "/" + id;
+            var res = $http.delete(deleteUrl);
             return res;
         }
 

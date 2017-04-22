@@ -146,7 +146,13 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// Deletes the specified Class.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        public void Delete(int id) {
+        public IHttpActionResult Delete(int id) {
+            var cl = db.Classes.SingleOrDefault(t => t.Id == id);
+            if(cl == null) {
+                return NotFound();
+            }
+            db.Classes.Delete(cl);
+            return Ok();
         }
     }
 }

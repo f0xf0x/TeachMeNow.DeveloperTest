@@ -12,5 +12,7 @@
             <div class="col-md-6">From {{vm.class.StartTime}}</div>
             <div class="col-md-6">To {{vm.class.EndTime}}</div>
         </div>
+        <button type="button" class="btn btn-primary" ng-click="vm.edit()">Edit</button>
+        <button type="button" class="btn btn-danger" ng-click="vm.deleteEvent()">Delete</button>
     </div>
 </div>

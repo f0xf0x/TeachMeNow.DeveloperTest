@@ -6,7 +6,7 @@
         .controller('Home.IndexController', Controller);
 
 
-    function Controller($scope, uiCalendarConfig, classService) {
+    function Controller($scope, $location, uiCalendarConfig, classService) {
         /* jshint validthis:true */
         var vm = this;
 
@@ -14,6 +14,7 @@
         vm.events = [];
         vm.activate = activate;
         vm.resize = resize;
+        vm.eventClick = eventClick;
 
         $scope.uiConfig = {
             calendar: {
@@ -27,6 +28,7 @@
                 },
                 dayClick: $scope.setCalDate,
                 background: '#f26522',
+                eventClick: vm.eventClick,
                 eventDrop: vm.resize,
                 eventResize: vm.resize
             }
@@ -77,7 +79,10 @@
             }, function (reason) {
                 alert('Failed: ' + reason);
             });
+        }
 
+        function eventClick(event, jsEvent, view) {
+            $location.path("/class/" + event.id);
         }
     }
 })();

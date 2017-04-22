@@ -11,10 +11,14 @@
         var vm = this;
 
         vm.activate = activate;
+        vm.edit = edit;
+
+        /* CRUD */
         vm.createEvent = createEvent;
         vm.viewEvent = viewEvent;
         vm.updateEvent = updateEvent;
         vm.deleteEvent = deleteEvent;
+
         vm.partners = [];
         vm.isTutor = $localStorage.currentUser.userIsTutor;
         vm.partnerLabel = vm.isTutor ? "Choose student" : "Choose tutor";
@@ -33,6 +37,9 @@
                 }
             });
             viewEvent();
+        }
+        function edit() {
+            $location.path("/edit/" + vm.classId);
         }
 
         function createEvent() {
