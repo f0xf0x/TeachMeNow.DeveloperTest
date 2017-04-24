@@ -1,9 +1,12 @@
-﻿<ng-include src="'angular/shared/header.html'" />
+﻿<div ng-controller="Home.IndexController as vm">
+    <ng-include src="'angular/shared/header.html'" />
 
-<div class="container body-content">
-    <div ng-init="vm.activate()">
-        <h2>Classes list</h2>
-        <div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="vm.events" calendar="classesCalendar"></div>
+    <div class="container body-content">
+        <div ng-init="vm.activate()">
+            <h2>Classes list</h2>
+            <div ui-calendar="uiConfig.calendar" class="span8 calendar"
+                 ng-model="vm.events"
+                 calendar="classesCalendar"></div>
+        </div>
     </div>
 </div>
-

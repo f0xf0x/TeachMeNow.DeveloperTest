@@ -39,9 +39,7 @@
             })
             .state('login', {
                 url: '/login',
-                templateUrl: 'angular/login/index.view.html',
-                controller: 'Login.IndexController',
-                controllerAs: 'vm'
+                templateUrl: 'angular/login/index.view.html'
             })
             .state('logout', {
                 url: '/logout',
@@ -65,8 +63,11 @@
             var restrictedPage = publicPages.indexOf($location.path()) === -1;
             if (restrictedPage && !$localStorage.currentUser) {
                 $location.path('/login');
+            } else {
+                if ($localStorage.currentUser) {
+                    $rootScope.userIsTutor = $localStorage.currentUser.userIsTutor;
+                }
             }
-            $rootScope.userIsTutor = $localStorage.currentUser
         });
     }
 })();

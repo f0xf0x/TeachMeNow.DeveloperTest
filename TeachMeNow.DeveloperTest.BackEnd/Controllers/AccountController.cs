@@ -10,18 +10,19 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
     /// <summary>
     /// Account controller to provide user registration funcionality
     /// </summary>
-    [RoutePrefix("api/Account")]
-    public class AccountController: ApiController {
-        private AuthRepository _repo = null;
+    public class AccountController: BaseApiController {
+        private readonly AuthRepository _repo;
 
-        public AccountController(BackEndDB database) {
-            _repo = new AuthRepository(database);
+        /// <summary>
+        /// Controller for user registrations
+        /// </summary>
+        /// <param name="database">Database object</param>
+        public AccountController(IBackEndDb database): base(database) {
+            _repo = new AuthRepository(db);
         }
 
-        // POST api/Account/Register
         [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(AppUserModel userModel) {
+        public async Task<IHttpActionResult> Post(AppUserModel userModel) {
             if(!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }

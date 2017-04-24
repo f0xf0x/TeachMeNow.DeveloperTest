@@ -5,7 +5,7 @@ using NMemory.Indexes;
 using NMemory.Tables;
 
 namespace TeachMeNow.DeveloperTest.BackEnd.Models {
-    public class BackEndDB: Database {
+    public class BackEndDB: Database, IBackEndDb {
         public ITable<User> Users { get; private set; }
 
         public ITable<Class> Classes { get; private set; }

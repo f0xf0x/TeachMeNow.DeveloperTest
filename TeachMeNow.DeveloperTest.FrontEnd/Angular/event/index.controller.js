@@ -19,6 +19,12 @@
         vm.updateEvent = updateEvent;
         vm.deleteEvent = deleteEvent;
 
+        /* Properies */
+        vm.subject = "";
+        vm.selectedPartner = 0;
+        vm.startTime = "";
+        vm.endTime = "";
+
         vm.partners = [];
         vm.isTutor = $localStorage.currentUser.userIsTutor;
         vm.partnerLabel = vm.isTutor ? "Choose student" : "Choose tutor";
@@ -69,8 +75,25 @@
             vm.loading = true;
 
             classService.getClass(vm.classId).then(function (response) {
-                vm.loading = false;
                 vm.class = response.data;
+                vm.subject = vm.class.Subject;
+                var selectedPartner;
+                if (vm.isTutor) {
+                    selectedPartner = vm.class.StudentId;
+                } else {
+                    selectedPartner = vm.class.TutorId;
+                }
+                var len = vm.partners.length;
+                for (var i = 0; i < len; i++) {
+                    if (vm.partners[i].Id === selectedPartner) {
+                        vm.selectedPartner = vm.partners[i];
+                    }
+                }
+                vm.startTime = vm.class.StartTime;
+                vm.endTime = vm.class.EndTime;
+
+                vm.loading = false;
+
             }, function errorCallback(response) {
                 vm.loading = false;
                 vm.error = "Operation was cancelled\n";

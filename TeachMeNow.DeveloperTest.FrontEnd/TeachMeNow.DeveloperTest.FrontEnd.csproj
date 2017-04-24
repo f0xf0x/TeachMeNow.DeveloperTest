@@ -122,6 +122,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Angular\app-services\account.service.js" />
     <Content Include="Angular\app-services\authentication.service.js" />
     <Content Include="Angular\app.js" />
     <Content Include="Angular\app-services\classService.js" />

@@ -52,6 +52,13 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
             return base.MatchEndpoint(context);
         }
 
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context) {
+            foreach(KeyValuePair<string, string> property in context.Properties.Dictionary) {
+                context.AdditionalResponseParameters.Add(property.Key, property.Value);
+            }
+            return base.TokenEndpoint(context);
+        }
+
         /// <summary>
         /// Create properties which will be returned to client in response.
         /// That's public information!

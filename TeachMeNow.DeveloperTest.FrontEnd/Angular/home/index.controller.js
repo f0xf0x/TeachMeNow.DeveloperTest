@@ -14,6 +14,7 @@
         vm.activate = activate;
         vm.resize = resize;
         vm.eventClick = eventClick;
+        vm.loading = true;
 
         $scope.uiConfig = {
             calendar: {
@@ -36,7 +37,9 @@
 
 
         function activate() {
+            vm.loading = true;
             classService.getClasses().then(function (response) {
+                vm.loading = false;
                 /* config object */
                 var len = response.data.length;
                 for (var i = 0; i < len; i++) {
@@ -50,6 +53,7 @@
                 }
 
             }, function errorCallback(response) {
+                vm.loading = false;
                 vm.error = "Operation was cancelled\n";
                 vm.error += "HTTP " + response.status + "\n" + response.data;
                 alert(vm.error);
@@ -63,18 +67,22 @@
                 StartTime: event.start,
                 EndTime: event.end
             };
+            vm.loading = true;
             classService.updateClass(classModel).then(function (response) {
+                vm.loading = false;
                 if (!response) {
                     revertFunc();
                     return;
                 }
                 //activate();
             }, function (reason) {
+                vm.loading = false;
                 alert('Failed: ' + reason);
             });
         }
 
         function eventClick(event, jsEvent, view) {
+            vm.loading = true;
             $location.path("/class/" + event.id);
         }
     }

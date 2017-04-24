@@ -16,7 +16,7 @@
             <div class="dropdown form-group" ng-class="{ 'has-error': form.$submitted && form.startTime.$invalid }">
                 <label for="selectedPartner">{{vm.partnerLabel}}</label>
                 <select ng-options="item as item.Name for item in vm.partners track by item.Id" ng-model="vm.selectedPartner"
-                        class="form-control" 
+                        class="form-control"
                         id="selectedPartner" name="selectedPartner"></select>
                 <div ng-messages="form.$submitted && form.selectedPartner.$error" class="help-block">
                     <div ng-message="required">Start Time is required</div>

@@ -1,25 +1,101 @@
-﻿<ng-include src="'angular/shared/header_empty.html'"/>
-<div class="col-md-6 col-md-offset-3">
-    <h2>Login</h2>
-    <form name="form" ng-submit="form.$valid && vm.login()" novalidate>
-        <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.username.$invalid }">
-            <label for="username">Username</label>
-            <input type="text" name="username" class="form-control" ng-model="vm.username" required />
-            <div ng-messages="form.$submitted && form.username.$error" class="help-block">
-                <div ng-message="required">Username is required</div>
+﻿<ng-include src="'angular/shared/header_empty.html'" />
+
+<div class="container body-content">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+            <a href="#login-tab" aria-controls="login-tab" role="tab" data-toggle="tab">Login</a>
+        </li>
+        <li role="presentation">
+            <a href="#register-tab" aria-controls="register-tab" role="tab" data-toggle="tab">Register</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="login-tab">
+            <div class="col-md-6 col-md-offset-3">
+                <h2>Login</h2>
+                <form ng-controller="Login.IndexController as login" name="form" ng-submit="form.$valid && login.login()" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.email.$invalid }">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" class="form-control" ng-model="login.email" required />
+                        <div ng-messages="form.$submitted && form.email.$error" class="help-block">
+                            <div ng-message="required">Email is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.password.$invalid }">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control" ng-model="login.password" required />
+                        <div ng-messages="form.$submitted && form.password.$error" class="help-block">
+                            <div ng-message="required">Password is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button ng-disabled="login.loading" class="btn btn-primary">Login</button>
+                    </div>
+                    <div ng-if="login.error" class="alert alert-danger">{{login.error}}</div>
+                </form>
             </div>
         </div>
-        <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.password.$invalid }">
-            <label for="password">Password</label>
-            <input type="password" name="password" class="form-control" ng-model="vm.password" required />
-            <div ng-messages="form.$submitted && form.password.$error" class="help-block">
-                <div ng-message="required">Password is required</div>
+        <div role="tabpanel" class="tab-pane" id="register-tab">
+            <div class="col-md-6 col-md-offset-3">
+                <h2>Register</h2>
+                <form ng-controller="Login.IndexController as register" name="form" ng-submit="form.$valid && register.register()" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.username.$invalid }">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username" class="form-control" ng-model="register.username" required />
+                        <div ng-messages="form.$submitted && form.username.$error" class="help-block">
+                            <div ng-message="required">Username is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.email.$invalid }">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" class="form-control" ng-model="register.email" required />
+                        <div ng-messages="form.$submitted && form.email.$error" class="help-block">
+                            <div ng-message="required">Email is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.password.$invalid }">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" class="form-control" ng-model="register.password" required />
+                        <div ng-messages="form.$submitted && form.password.$error" class="help-block">
+                            <div ng-message="required">Password is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.passwordConfirm.$invalid }">
+                        <label for="passwordConfirm">Confirm password</label>
+                        <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control" ng-model="register.passwordConfirm" required />
+                        <div ng-messages="form.$submitted && form.passwordConfirm.$error" class="help-block">
+                            <div ng-message="required">Password is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-class="{ 'has-error': form.$submitted && form.isTutor.$invalid }">
+                        <label for="isTutor">Who are you?</label>
+
+                        <div class="radio">
+                            <label class="radio-inline">
+                                <input type="radio" name="isTutor" id="isTutor1" value="false" ng-model="register.isTutor" required>I'm a student
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label class="radio-inline">
+                                <input type="radio" name="isTutor" id="isTutor2" value="true" ng-model="register.isTutor" required>I'm a tutor
+                            </label>
+                        </div>
+
+                        <div ng-messages="form.$submitted && form.isTutor.$error" class="help-block">
+                            <div ng-message="required">Please, choose one</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button ng-disabled="register.loading" class="btn btn-primary">Login</button>
+                    </div>
+                    <div ng-if="register.error" class="alert alert-danger">{{register.error}}</div>
+                </form>
             </div>
         </div>
-        <div class="form-group">
-            <button ng-disabled="vm.loading" class="btn btn-primary">Login</button>
-            <img ng-if="vm.loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-        </div>
-        <div ng-if="vm.error" class="alert alert-danger">{{vm.error}}</div>
-    </form>
+    </div>
+
 </div>

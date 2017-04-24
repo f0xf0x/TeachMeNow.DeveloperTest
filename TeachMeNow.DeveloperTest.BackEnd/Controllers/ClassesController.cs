@@ -11,28 +11,37 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
     /// </summary>
     /// <seealso cref="System.Web.Http.ApiController" />
     public class ClassesController: BaseApiController {
-        BackEndDB db;
+        private IQueryable<Class> currentUserClasses {
+            get {
+                var classes = db.Classes.AsQueryable();
+                if(currentUser.IsTutor) {
+                    classes = classes.Where(t => t.TutorId == currentUser.Id);
+                } else {
+                    classes = classes.Where(t => t.StudentId == currentUser.Id);
+                }
+                return classes;
+            }
+        }
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassesController" /> class.
         /// </summary>
         /// <param name="database">The database.</param>
-        public ClassesController(BackEndDB database) {
-            db = database;
+        public ClassesController(IBackEndDb database): base(database) {
         }
 
-        // GET: api/Classes
         /// <summary>
         /// Gets all the classes.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public IHttpActionResult Get() {
-            var classes = db.Classes.Where(t => t.StudentId == currentUser.Id).Select(t => new ClassViewModel(db, t)).AsEnumerable();
-            return Ok(classes);
+            IQueryable<Class> classes = currentUserClasses;
+
+            return Ok(classes.Select(t => new ClassViewModel(db, t)).AsEnumerable());
         }
 
-        // GET: api/Classes/5
         /// <summary>
         /// Gets the specified class.
         /// </summary>
@@ -40,7 +49,8 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
         public IHttpActionResult Get(int id) {
-            var classes = db.Classes.Where(t => t.StudentId == currentUser.Id);
+            IQueryable<Class> classes = currentUserClasses;
+
             var cl = classes.SingleOrDefault(t => t.Id == id);
 
             if(cl == default(ClassViewModel)) {
@@ -50,7 +60,6 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
             return Ok(new ClassViewModel(db, cl));
         }
 
-        // POST: api/Classes
         /// <summary>
         /// Adds the Class to the database.
         /// </summary>
@@ -104,7 +113,9 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
                 return BadRequest(ModelState);
             }
             db.Classes.Insert(newClass);
-            return CreatedAtRoute("DefaultApi", new { id = newClass.Id }, newClass);
+            return CreatedAtRoute("DefaultApi", new {
+                id = newClass.Id
+            }, newClass);
         }
 
         private void removePropertyError(string name, string root) {
@@ -123,7 +134,6 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
             }
         }
 
-        // PUT: api/Classes/5
         /// <summary>
         /// Updates the specified Class in the database.
         /// </summary>
@@ -140,13 +150,25 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
             if(model.StartTime != default(DateTime)) {
                 dbM.StartTime = model.StartTime;
             }
+            
+            if(!string.IsNullOrWhiteSpace(model.Subject)) {
+                dbM.Subject = model.Subject;
+            }
+
+            if(model.StudentId != default(int)) {
+                dbM.StudentId = model.StudentId;
+            }
+            
+            if(model.TutorId != default(int)) {
+                dbM.TutorId = model.TutorId;
+            }
+            
 
             db.Classes.Update(dbM);
 
             return Ok();
         }
 
-        // DELETE: api/Classes/5
         /// <summary>
         /// Deletes the specified Class.
         /// </summary>

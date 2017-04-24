@@ -5,10 +5,11 @@
         .module("app")
         .controller('Login.IndexController', Controller);
 
-    function Controller($location, AuthenticationService) {
+    function Controller($location, AuthenticationService, accountService) {
         var vm = this;
 
         vm.login = login;
+        vm.register = register;
 
         initController();
 
@@ -19,7 +20,7 @@
 
         function login() {
             vm.loading = true;
-            AuthenticationService.Login(vm.username, vm.password, function (result) {
+            AuthenticationService.Login(vm.email, vm.password, function (result) {
                 if (result === true) {
                     $location.path('/home');
                 } else {
@@ -28,5 +29,31 @@
                 }
             });
         };
+
+        function register() {
+            vm.loading = true;
+            var model = {
+                UserName: vm.username,
+                Email: vm.email,
+                Password: vm.password,
+                ConfirmPassword: vm.passwordConfirm,
+                IsTutor: vm.isTutor === "true" ? true : false
+            }
+            accountService.createAccount(model).then(function success(response) {
+
+                AuthenticationService.Login(vm.email, vm.password, function (result) {
+                    if (result === true) {
+                        $location.path('/home');
+                    } else {
+                        $location.path('/login');
+                        vm.loading = false;
+                    }
+                });
+
+            }, function errorCallback(response) {
+                vm.loading = false;
+                vm.error = response.body;
+            });
+        }
     }
 })();

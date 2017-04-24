@@ -4,12 +4,17 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 
 using TeachMeNow.DeveloperTest.BackEnd.Models;
 
 namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
     public class BaseApiController: ApiController {
+        protected readonly IBackEndDb db;
+
+        public BaseApiController(IBackEndDb db) {
+            this.db = db;
+        }
+
         protected User currentUser {
             get {
                 IPrincipal principal = Request.GetRequestContext().Principal;

@@ -9,14 +9,12 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
     /// </summary>
     /// <seealso cref="System.Web.Http.ApiController" />
     public class UsersController: BaseApiController {
-        readonly BackEndDB db;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UsersController" /> class.
         /// </summary>
         /// <param name="database">The database.</param>
-        public UsersController(BackEndDB database) {
-            db = database;
+        public UsersController(IBackEndDb database): base(database) {
         }
 
         /// <summary>

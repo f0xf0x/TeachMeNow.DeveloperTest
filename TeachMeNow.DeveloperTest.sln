@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeachMeNow.DeveloperTest.BackEnd", "TeachMeNow.DeveloperTest.BackEnd\TeachMeNow.DeveloperTest.BackEnd.csproj", "{B5C0107B-6652-47B0-842D-0664FBF8BACB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeachMeNow.DeveloperTest.Tests", "TeachMeNow.DeveloperTest.Tests\TeachMeNow.DeveloperTest.Tests.csproj", "{83E74104-504C-4A02-B17F-C883269BB1E9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeachMeNow.DeveloperTest.FrontEnd", "TeachMeNow.DeveloperTest.FrontEnd\TeachMeNow.DeveloperTest.FrontEnd.csproj", "{98F5A90E-99C9-4FBB-B5A1-5730E764C85E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeachMeNow.DeveloperTest.BackEndTests", "TeachMeNow.DeveloperTest.BackEndTests\TeachMeNow.DeveloperTest.BackEndTests.csproj", "{650EB678-453A-473E-941C-8E72787089C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{98F5A90E-99C9-4FBB-B5A1-5730E764C85E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98F5A90E-99C9-4FBB-B5A1-5730E764C85E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98F5A90E-99C9-4FBB-B5A1-5730E764C85E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{650EB678-453A-473E-941C-8E72787089C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{650EB678-453A-473E-941C-8E72787089C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{650EB678-453A-473E-941C-8E72787089C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{650EB678-453A-473E-941C-8E72787089C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
