@@ -10,7 +10,6 @@
         /* jshint validthis:true */
         var vm = this;
 
-        vm.classes = {};
         vm.events = [];
         vm.activate = activate;
         vm.resize = resize;
@@ -18,13 +17,14 @@
 
         $scope.uiConfig = {
             calendar: {
+                events: vm.events,
                 height: 500,
                 editable: true,
                 aspectRatio: 2,
                 header: {
                     left: 'title',
                     center: '',
-                    right: 'today month,agendaWeek prev,next'
+                    right: 'today month,agendaWeek,listMonth prev,next'
                 },
                 dayClick: $scope.setCalDate,
                 background: '#f26522',
@@ -37,13 +37,10 @@
 
         function activate() {
             classService.getClasses().then(function (response) {
-                vm.classes = response.data;
                 /* config object */
-                uiCalendarConfig.calendars['classesCalendar'].fullCalendar('removeEventSources');
-                vm.events.slice(0);
-                var len = vm.classes.length;
+                var len = response.data.length;
                 for (var i = 0; i < len; i++) {
-                    var item = vm.classes[i];
+                    var item = response.data[i];
                     vm.events.push({
                         id: item.Id,
                         title: item.Subject,
@@ -51,10 +48,6 @@
                         end: new Date(item.EndTime)
                     });
                 }
-                uiCalendarConfig.calendars['classesCalendar'].fullCalendar('addEventSource', vm.events);
-
-                //uiCalendarConfig.calendars.classesCalendar.fullCalendar('renderEvents');
-
 
             }, function errorCallback(response) {
                 vm.error = "Operation was cancelled\n";
@@ -75,7 +68,7 @@
                     revertFunc();
                     return;
                 }
-                activate();
+                //activate();
             }, function (reason) {
                 alert('Failed: ' + reason);
             });
