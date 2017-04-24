@@ -17,7 +17,7 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// Controller for user registrations
         /// </summary>
         /// <param name="database">Database object</param>
-        public AccountController(IBackEndDb database): base(database) {
+        public AccountController(IBackendDb database): base(database) {
             _repo = new AuthRepository(db);
         }
 

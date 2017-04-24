@@ -18,7 +18,7 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
 
             // the fastest way - to use service locator
             // the best to register dependency here
-            var db = (IBackEndDb) container.GetService(typeof(IBackEndDb));
+            var db = (IBackendDb) container.GetService(typeof(IBackendDb));
 
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions() {

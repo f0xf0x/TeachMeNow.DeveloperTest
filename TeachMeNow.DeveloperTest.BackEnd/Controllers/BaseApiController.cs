@@ -9,17 +9,30 @@ using TeachMeNow.DeveloperTest.BackEnd.Models;
 
 namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
     public class BaseApiController: ApiController {
-        protected readonly IBackEndDb db;
+        protected readonly IBackendDb db;
+        private ClaimsPrincipal claimsPrincipal;
 
-        public BaseApiController(IBackEndDb db) {
+        public BaseApiController(IBackendDb db) {
             this.db = db;
+        }
+
+        public ClaimsPrincipal RequestPrincipal {
+            get {
+                if(claimsPrincipal == null) {
+                    
+                IPrincipal principal = Request.GetRequestContext().Principal;
+                 claimsPrincipal = principal as ClaimsPrincipal;
+                }
+                return claimsPrincipal;
+            }
+            set {
+                claimsPrincipal = value;
+            }
         }
 
         protected User currentUser {
             get {
-                IPrincipal principal = Request.GetRequestContext().Principal;
-                ClaimsPrincipal claimsPrincipal = principal as ClaimsPrincipal;
-                return new User(claimsPrincipal);
+                return new User(RequestPrincipal);
             }
         }
 

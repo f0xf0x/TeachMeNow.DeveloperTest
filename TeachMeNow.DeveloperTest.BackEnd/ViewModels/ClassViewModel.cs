@@ -6,7 +6,7 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Models {
 
         public string TutorName { get; set; }
 
-        public ClassViewModel(IBackEndDb db, Class cl) {
+        public ClassViewModel(IBackendDb db, Class cl) {
             Id = cl.Id;
             StartTime = cl.StartTime;
             EndTime = cl.EndTime;

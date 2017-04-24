@@ -8,9 +8,9 @@ using TeachMeNow.DeveloperTest.BackEnd.Models;
 
 namespace TeachMeNow.DeveloperTest.BackEnd.Security {
     public class AuthRepository {
-        private readonly IBackEndDb database;
+        private readonly IBackendDb database;
 
-        public AuthRepository(IBackEndDb database) {
+        public AuthRepository(IBackendDb database) {
             this.database = database;
         }
 

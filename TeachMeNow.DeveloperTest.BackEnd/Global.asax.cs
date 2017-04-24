@@ -31,7 +31,7 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
             // OPTIONAL: Register the Autofac filter provider.
             builder.RegisterWebApiFilterProvider(config);
 
-            builder.RegisterType<BackEndDB>().As<IBackEndDb>().SingleInstance();
+            builder.RegisterType<BackendDb>().As<IBackendDb>().SingleInstance();
 
             // Set the dependency resolver to be Autofac.
             var container = builder.Build();

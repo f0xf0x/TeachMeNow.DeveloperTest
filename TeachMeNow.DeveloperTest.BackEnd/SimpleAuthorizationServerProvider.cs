@@ -11,9 +11,9 @@ using TeachMeNow.DeveloperTest.BackEnd.Models;
 
 namespace TeachMeNow.DeveloperTest.BackEnd {
     public class SimpleAuthorizationServerProvider: OAuthAuthorizationServerProvider {
-        private readonly IBackEndDb db;
+        private readonly IBackendDb db;
 
-        public SimpleAuthorizationServerProvider(IBackEndDb db) {
+        public SimpleAuthorizationServerProvider(IBackendDb db) {
             this.db = db;
         }
 
@@ -25,11 +25,8 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim(nameof(user.Name), user.Name));
-            identity.AddClaim(new Claim(nameof(user.Email), user.Email));
-            identity.AddClaim(new Claim(nameof(User.Id), user.Id.ToString()));
-            identity.AddClaim(new Claim("role", user.IsTutor ? "tutor" : "student"));
-
+            var claims = user.GetClaims();
+            identity.AddClaims(claims);
             AuthenticationProperties properties = createProperties(new Dictionary<string, string>() {
                 { nameof(User.IsTutor), user.IsTutor ? "true" : "false" },
                 { $"{nameof(User)}{nameof(user.Id)}",user.Id.ToString() }

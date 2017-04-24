@@ -486,7 +486,7 @@
             Account controller to provide user registration funcionality
             </summary>
         </member>
-        <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.AccountController.#ctor(TeachMeNow.DeveloperTest.BackEnd.Models.IBackEndDb)">
+        <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.AccountController.#ctor(TeachMeNow.DeveloperTest.BackEnd.Models.IBackendDb)">
             <summary>
             Controller for user registrations
             </summary>
@@ -510,7 +510,7 @@
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
-        <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.ClassesController.#ctor(TeachMeNow.DeveloperTest.BackEnd.Models.IBackEndDb)">
+        <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.ClassesController.#ctor(TeachMeNow.DeveloperTest.BackEnd.Models.IBackendDb)">
             <summary>
             Initializes a new instance of the <see cref="T:TeachMeNow.DeveloperTest.BackEnd.Controllers.ClassesController" /> class.
             </summary>
@@ -555,7 +555,7 @@
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
-        <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.UsersController.#ctor(TeachMeNow.DeveloperTest.BackEnd.Models.IBackEndDb)">
+        <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.UsersController.#ctor(TeachMeNow.DeveloperTest.BackEnd.Models.IBackendDb)">
             <summary>
             Initializes a new instance of the <see cref="T:TeachMeNow.DeveloperTest.BackEnd.Controllers.UsersController" /> class.
             </summary>

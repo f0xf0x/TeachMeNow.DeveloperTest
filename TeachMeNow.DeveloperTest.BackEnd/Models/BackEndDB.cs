@@ -5,12 +5,15 @@ using NMemory.Indexes;
 using NMemory.Tables;
 
 namespace TeachMeNow.DeveloperTest.BackEnd.Models {
-    public class BackEndDB: Database, IBackEndDb {
+    public class BackendDb: Database, IBackendDb {
         public ITable<User> Users { get; private set; }
 
         public ITable<Class> Classes { get; private set; }
 
-        public BackEndDB() {
+        public BackendDb():this(false) {
+            
+        }
+        public BackendDb(bool doNotSeed) {
             var userTable = Tables.Create<User, int>(u => u.Id, new IdentitySpecification<User>(u => u.Id));
             var classTable = Tables.Create<Class, int>(c => c.Id, new IdentitySpecification<Class>(u => u.Id));
 
@@ -28,6 +31,12 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Models {
 
             //Seed database with Users
             //Users
+            if(!doNotSeed) {
+                seed();
+            }
+        }
+
+        private void seed() {
             var user1 = new User {
                 Name = "User 1",
                 Email = "user1@example.com",
