@@ -1,13 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace TeachMeNow.DeveloperTest.BackEnd.Models
-{
+namespace TeachMeNow.DeveloperTest.BackEnd.Models {
     /// <summary>
     /// Class contains the details of a lesson between a tutor and student
     /// </summary>
-    public class Class
-    {
+    public class Class {
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>

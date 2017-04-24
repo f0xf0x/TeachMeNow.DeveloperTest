@@ -1,25 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+
 using TeachMeNow.DeveloperTest.BackEnd.Models;
 
-namespace TeachMeNow.DeveloperTest.BackEnd.Controllers
-{
+namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
     /// <summary>
-    /// 
     /// </summary>
     /// <seealso cref="System.Web.Http.ApiController" />
-    public class UsersController : BaseApiController
-    {
-        BackEndDB db = null;
+    public class UsersController: BaseApiController {
+        readonly BackEndDB db;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// Initializes a new instance of the <see cref="UsersController" /> class.
         /// </summary>
         /// <param name="database">The database.</param>
-        public UsersController(BackEndDB database)
-        {
+        public UsersController(BackEndDB database) {
             db = database;
         }
 
@@ -27,12 +23,12 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers
         /// Gets a list of Users.
         /// </summary>
         /// <returns>IEnumerable&lt;User&gt;</returns>
-        public IEnumerable<User> Get([FromUri]bool onlyPartners = false)
-        {
+        public IHttpActionResult Get([FromUri] bool onlyPartners = false) {
+            IEnumerable<User> users = db.Users;
             if(onlyPartners) {
-                return db.Users.Where(t => t.IsTutor != currentUser.IsTutor).AsEnumerable();
+                users = users.Where(t => t.IsTutor != currentUser.IsTutor);
             }
-            return db.Users.AsEnumerable();
+            return Ok(users.AsEnumerable());
         }
 
         /// <summary>
@@ -40,10 +36,12 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
-        public User Get(int id)
-        {
-            return db.Users.FirstOrDefault(x => x.Id == id);
+        public IHttpActionResult Get(int id) {
+            User user = db.Users.SingleOrDefault(x => x.Id == id);
+            if(user == default(User)) {
+                return NotFound();
+            }
+            return Ok(user);
         }
     }
-
 }

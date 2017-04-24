@@ -27,8 +27,9 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// </summary>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public IEnumerable<ClassViewModel> Get() {
-            return db.Classes.Where(t => t.StudentId == currentUser.Id).Select(t=>new ClassViewModel(t));
+        public IHttpActionResult Get() {
+            var classes = db.Classes.Where(t => t.StudentId == currentUser.Id).Select(t => new ClassViewModel(db, t)).AsEnumerable();
+            return Ok(classes);
         }
 
         // GET: api/Classes/5
@@ -38,10 +39,15 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         /// <exception cref="System.NotImplementedException"></exception>
-        public ClassViewModel Get(int id) {
+        public IHttpActionResult Get(int id) {
             var classes = db.Classes.Where(t => t.StudentId == currentUser.Id);
-            var cl= classes.SingleOrDefault(t => t.Id == id);
-            return new ClassViewModel(cl);
+            var cl = classes.SingleOrDefault(t => t.Id == id);
+
+            if(cl == default(ClassViewModel)) {
+                return NotFound();
+            }
+
+            return Ok(new ClassViewModel(db, cl));
         }
 
         // POST: api/Classes
@@ -52,7 +58,7 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         public IHttpActionResult Post([FromBody] Class newClass) {
             if(newClass == null) {
                 ModelState.Clear();
-                addModelError(nameof(Class),"Cannot create empty class");
+                addModelError(nameof(Class), "Cannot create empty class");
                 return BadRequest(ModelState);
             }
             var tutorBusy = db.Classes.Any(t => t.TutorId == newClass.TutorId &&
@@ -77,21 +83,21 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
                 addModelError(nameof(newClass.TutorId), "Cannot book a class for different user");
             }
             if(!currentUser.IsTutor && newClass.StudentId > 0 && newClass.StudentId != currentUser.Id) {
-                 addModelError(nameof(newClass.StudentId), "Cannot book a class for different user");
+                addModelError(nameof(newClass.StudentId), "Cannot book a class for different user");
             }
 
             if(currentUser.IsTutor) {
                 if(!db.Users.Any(t => !t.IsTutor && t.Id == newClass.StudentId)) {
-                     addModelError(nameof(newClass.StudentId), "Cannot book a class: student doesn't exists");
+                    addModelError(nameof(newClass.StudentId), "Cannot book a class: student doesn't exists");
                 }
                 newClass.TutorId = currentUser.Id;
-                removePropertyError(nameof(Class.TutorId),nameof(newClass));
+                removePropertyError(nameof(Class.TutorId), nameof(newClass));
             } else {
                 if(!db.Users.Any(t => t.IsTutor && t.Id == newClass.TutorId)) {
-                     addModelError(nameof(newClass.StudentId), "Cannot book a class: tutor doesn't exists");
+                    addModelError(nameof(newClass.StudentId), "Cannot book a class: tutor doesn't exists");
                 }
                 newClass.StudentId = currentUser.Id;
-                removePropertyError(nameof(Class.StudentId),nameof(newClass));
+                removePropertyError(nameof(Class.StudentId), nameof(newClass));
             }
 
             if(!ModelState.IsValid) {
@@ -99,17 +105,16 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
             }
             db.Classes.Insert(newClass);
             return CreatedAtRoute("DefaultApi", new { id = newClass.Id }, newClass);
-
         }
 
         private void removePropertyError(string name, string root) {
-            var errors =ModelState[root]?.Errors;
+            var errors = ModelState[root]?.Errors;
             if(errors == null) {
                 return;
             }
-                    var errorsRoRemove=new List<ModelError>();
+            var errorsRoRemove = new List<ModelError>();
             foreach(ModelError error in errors) {
-                if(error.ErrorMessage.Contains(name) || (error.Exception?.Message.Contains(name)??false)) {
+                if(error.ErrorMessage.Contains(name) || (error.Exception?.Message.Contains(name) ?? false)) {
                     errorsRoRemove.Add(error);
                 }
             }
@@ -123,16 +128,16 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
         /// Updates the specified Class in the database.
         /// </summary>
         /// <param name="id">The identifier.</param>
-        /// <param name="updateClass">The update class.</param>
+        /// <param name="model">The update class.</param>
         public IHttpActionResult Put(int id, [FromBody] Class model) {
             var dbM = db.Classes.SingleOrDefault(t => t.Id == id);
             if(dbM == null) {
                 return NotFound();
             }
-            if (model.EndTime != default(DateTime)) {
+            if(model.EndTime != default(DateTime)) {
                 dbM.EndTime = model.EndTime;
             }
-            if (model.StartTime != default(DateTime)) {
+            if(model.StartTime != default(DateTime)) {
                 dbM.StartTime = model.StartTime;
             }
 

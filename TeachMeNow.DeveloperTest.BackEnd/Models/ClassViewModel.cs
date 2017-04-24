@@ -2,22 +2,22 @@
 
 namespace TeachMeNow.DeveloperTest.BackEnd.Models {
     public class ClassViewModel: Class {
-        public ClassViewModel(Class cl) {
-            this.Id = cl.Id;
-            this.StartTime = cl.StartTime;
-            this.EndTime = cl.EndTime;
-            this.Subject = cl.Subject;
-            this.StudentId = cl.StudentId;
-            this.TutorId = cl.TutorId;
+        public string StudentName { get; set; }
 
-            var db = new BackEndDB();
+        public string TutorName { get; set; }
+
+        public ClassViewModel(BackEndDB db, Class cl) {
+            Id = cl.Id;
+            StartTime = cl.StartTime;
+            EndTime = cl.EndTime;
+            Subject = cl.Subject;
+            StudentId = cl.StudentId;
+            TutorId = cl.TutorId;
+
             var tutorName = db.Users.SingleOrDefault(t => t.Id == cl.TutorId)?.Name;
             var studentName = db.Users.SingleOrDefault(t => t.Id == cl.StudentId)?.Name;
-            this.TutorName = tutorName;
-            this.StudentName = studentName;
+            TutorName = tutorName;
+            StudentName = studentName;
         }
-
-        public string StudentName { get; set; }
-        public string TutorName { get; set; }
     }
 }

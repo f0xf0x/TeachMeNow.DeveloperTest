@@ -1,27 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Web;
 
-namespace TeachMeNow.DeveloperTest.BackEnd.Models
-{
+namespace TeachMeNow.DeveloperTest.BackEnd.Models {
     /// <summary>
     /// User model
     /// </summary>
-    public class User
-    {
-        public User(ClaimsPrincipal principal) {
-            string claimsId = principal.Claims.SingleOrDefault(c => c.Type == nameof(Id))?.Value;
-            this.Id = Convert.ToInt32(claimsId);
-            this.Name = principal.Claims.SingleOrDefault(c => c.Type == nameof(Name))?.Value;
-            this.Email = principal.Claims.SingleOrDefault(c => c.Type == nameof(Email))?.Value;
-            this.IsTutor = principal.Claims.SingleOrDefault(c => c.Type == "role")?.Value == "tutor";
-        }
-
-        public User() {
-        }
-
+    public class User {
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
@@ -49,5 +34,16 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Models
         public string Password { get; set; }
 
         public string Email { get; set; }
+
+        public User(ClaimsPrincipal principal) {
+            string claimsId = principal.Claims.SingleOrDefault(c => c.Type == nameof(Id))?.Value;
+            Id = Convert.ToInt32(claimsId);
+            Name = principal.Claims.SingleOrDefault(c => c.Type == nameof(Name))?.Value;
+            Email = principal.Claims.SingleOrDefault(c => c.Type == nameof(Email))?.Value;
+            IsTutor = principal.Claims.SingleOrDefault(c => c.Type == "role")?.Value == "tutor";
+        }
+
+        public User() {
+        }
     }
 }

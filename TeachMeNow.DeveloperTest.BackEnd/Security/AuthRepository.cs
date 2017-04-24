@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 using Microsoft.AspNet.Identity;
 
@@ -17,28 +15,30 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Security {
         }
 
         public async Task<IdentityResult> RegisterUser(AppUserModel model) {
-            var entity = new User(){Name = model.UserName,IsTutor = model.IsTutor,Email = model.Email, Password = model.Password};
+            var entity = new User() {
+                Name = model.UserName,
+                IsTutor = model.IsTutor,
+                Email = model.Email,
+                Password = model.Password
+            };
             try {
                 database.Users.Insert(entity);
 
                 return IdentityResult.Success;
-            } catch (Exception ex) {
+            } catch(Exception ex) {
+                var result = IdentityResult.Failed($"Cannot register user: {ex.Message}");
 
-            var result = IdentityResult.Failed($"Cannot register user: {ex.Message}");
-
-            return result;
+                return result;
             }
         }
 
         public async Task<User> FindUser(string email, string password) {
-            var user =database.Users.SingleOrDefault(f => f.Email == email && f.Password == password);
+            var user = database.Users.SingleOrDefault(f => f.Email == email && f.Password == password);
             if(user == null) {
                 throw new ArgumentNullException(nameof(user));
             }
 
             return user;
         }
-
     }
-
 }

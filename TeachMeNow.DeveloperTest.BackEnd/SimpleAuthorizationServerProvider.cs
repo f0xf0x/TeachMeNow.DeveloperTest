@@ -10,7 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using TeachMeNow.DeveloperTest.BackEnd.Models;
 
 namespace TeachMeNow.DeveloperTest.BackEnd {
-    public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider {
+    public class SimpleAuthorizationServerProvider: OAuthAuthorizationServerProvider {
         private readonly BackEndDB db;
 
         public SimpleAuthorizationServerProvider(BackEndDB db) {
@@ -19,7 +19,7 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context) {
             var user = db.Users.SingleOrDefault(f => f.Email == context.UserName && f.Password == context.Password);
-            if (user == default(User)) {
+            if(user == default(User)) {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
@@ -30,8 +30,11 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
             identity.AddClaim(new Claim(nameof(User.Id), user.Id.ToString()));
             identity.AddClaim(new Claim("role", user.IsTutor ? "tutor" : "student"));
 
-
-            AuthenticationProperties properties = createProperties(new Dictionary<string, string>(){{nameof(User.IsTutor),user.IsTutor?"true":"false"}});
+            AuthenticationProperties properties = createProperties(new Dictionary<string, string>() {
+                {
+                    nameof(User.IsTutor), user.IsTutor ? "true" : "false"
+                }
+            });
             var ticket = new AuthenticationTicket(identity, properties);
             context.Validated(ticket);
         }
@@ -41,14 +44,13 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
         }
 
         public override Task MatchEndpoint(OAuthMatchEndpointContext context) {
-            if (context.IsTokenEndpoint && context.Request.Method == "OPTIONS") {
+            if(context.IsTokenEndpoint && context.Request.Method == "OPTIONS") {
                 context.RequestCompleted();
                 return Task.FromResult(0);
             }
 
             return base.MatchEndpoint(context);
         }
-
 
         /// <summary>
         /// Create properties which will be returned to client in response.
@@ -61,8 +63,8 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
                     "ServerTime", DateTime.UtcNow.ToString("o")
                 }
             };
-            if (additionalPublicFields?.Count > 0) {
-                foreach (var field in additionalPublicFields) {
+            if(additionalPublicFields?.Count > 0) {
+                foreach(var field in additionalPublicFields) {
                     data.Add(field.Key, field.Value);
                 }
             }

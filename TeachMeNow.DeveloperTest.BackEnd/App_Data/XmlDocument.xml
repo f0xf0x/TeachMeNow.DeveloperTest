@@ -486,11 +486,18 @@
             Account controller to provide user registration funcionality
             </summary>
         </member>
+        <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.BaseApiController.addModelError(System.String,System.String)">
+            <summary>
+            ModelState.AddModelError wrapper
+            </summary>
+            <param name="name">propery name</param>
+            <param name="message">message to client</param>
+        </member>
         <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.BaseApiController.Options">
             <summary>
             Workaround for CORS
             </summary>
-            <returns></returns>
+            <returns>Options stub</returns>
         </member>
         <member name="T:TeachMeNow.DeveloperTest.BackEnd.Controllers.ClassesController">
             <summary>
@@ -529,7 +536,7 @@
             Updates the specified Class in the database.
             </summary>
             <param name="id">The identifier.</param>
-            <param name="updateClass">The update class.</param>
+            <param name="model">The update class.</param>
         </member>
         <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.ClassesController.Delete(System.Int32)">
             <summary>
@@ -539,13 +546,12 @@
         </member>
         <member name="T:TeachMeNow.DeveloperTest.BackEnd.Controllers.UsersController">
             <summary>
-            
             </summary>
             <seealso cref="T:System.Web.Http.ApiController" />
         </member>
         <member name="M:TeachMeNow.DeveloperTest.BackEnd.Controllers.UsersController.#ctor(TeachMeNow.DeveloperTest.BackEnd.Models.BackEndDB)">
             <summary>
-            Initializes a new instance of the <see cref="T:TeachMeNow.DeveloperTest.BackEnd.Controllers.UsersController"/> class.
+            Initializes a new instance of the <see cref="T:TeachMeNow.DeveloperTest.BackEnd.Controllers.UsersController" /> class.
             </summary>
             <param name="database">The database.</param>
         </member>

@@ -7,7 +7,7 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Security {
     public class AppUserModel {
         [Required]
         [DataType(DataType.EmailAddress)]
-        [Display(Name="Email address")]
+        [Display(Name = "Email address")]
         public string Email { get; set; }
 
         [Required]
