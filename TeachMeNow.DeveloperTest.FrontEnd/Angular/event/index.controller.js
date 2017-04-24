@@ -27,6 +27,7 @@
 
         vm.partners = [];
         vm.isTutor = $localStorage.currentUser.userIsTutor;
+        vm.userId = $localStorage.currentUser.userId;
         vm.partnerLabel = vm.isTutor ? "Choose student" : "Choose tutor";
         vm.loading = false;
         if ($stateParams.classid) {
@@ -50,12 +51,14 @@
 
         function createEvent() {
             vm.loading = true;
+            vm.isTutor = $localStorage.currentUser.userIsTutor;
+            vm.userId = $localStorage.currentUser.userId;
             var partner = vm.selectedPartner.Id;
             var event;
             if (vm.isTutor) {
-                event = { subject: vm.subject, StudentId: partner, startTime: vm.startTime, endTime: vm.endTime };
+                event = { subject: vm.subject, StudentId: partner, TutorId:vm.userId, startTime: vm.startTime, endTime: vm.endTime };
             } else {
-                event = { subject: vm.subject, TutorId: partner, startTime: vm.startTime, endTime: vm.endTime };
+                event = { subject: vm.subject, StudentId:vm.userId, TutorId: partner, startTime: vm.startTime, endTime: vm.endTime };
             }
 
             classService.createClass(event).then(function (response) {
@@ -64,7 +67,7 @@
             }, function errorCallback(response) {
                 vm.loading = false;
                 vm.error = "Operation was cancelled\n";
-                vm.error += "HTTP " + response.status + "\n" + response.data;
+                vm.error += "HTTP " + response.status + "\n" + JSON.stringify(response.data);
             });
         }
         function viewEvent() {

@@ -70,30 +70,6 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
                 addModelError(nameof(Class), "Cannot create empty class");
                 return BadRequest(ModelState);
             }
-            var tutorBusy = db.Classes.Any(t => t.TutorId == newClass.TutorId &&
-                                                (
-                                                    (t.StartTime > newClass.StartTime && t.StartTime < newClass.EndTime) ||
-                                                    (t.EndTime > newClass.StartTime && t.EndTime < newClass.EndTime)
-                                                ));
-
-            if(tutorBusy) {
-                addModelError(nameof(newClass.StartTime), "Cannot book a class, tutor is busy");
-            }
-
-            var studentBusy = db.Classes.Any(t => t.StudentId == newClass.StudentId &&
-                                                  (
-                                                      (t.StartTime > newClass.StartTime && t.StartTime < newClass.EndTime) ||
-                                                      (t.EndTime > newClass.StartTime && t.EndTime < newClass.EndTime)
-                                                  ));
-            if(studentBusy) {
-                addModelError(nameof(newClass.StartTime), "Cannot book a class, student is busy");
-            }
-            if(currentUser.IsTutor && newClass.TutorId > 0 && newClass.TutorId != currentUser.Id) {
-                addModelError(nameof(newClass.TutorId), "Cannot book a class for different user");
-            }
-            if(!currentUser.IsTutor && newClass.StudentId > 0 && newClass.StudentId != currentUser.Id) {
-                addModelError(nameof(newClass.StudentId), "Cannot book a class for different user");
-            }
 
             if(currentUser.IsTutor) {
                 if(!db.Users.Any(t => !t.IsTutor && t.Id == newClass.StudentId)) {
@@ -109,6 +85,24 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
                 removePropertyError(nameof(Class.StudentId), nameof(newClass));
             }
 
+            var tutorBusy = ClassesIntersectionValidate(newClass, db.Classes.Where(t => t.TutorId == newClass.TutorId).ToList());
+
+            if(tutorBusy) {
+                addModelError(nameof(newClass.StartTime), "Cannot book a class, tutor is busy");
+            }
+
+            var studentBusy = ClassesIntersectionValidate(newClass, db.Classes.Where(t => t.StudentId == newClass.StudentId).ToList());
+            if(studentBusy) {
+                addModelError(nameof(newClass.StartTime), "Cannot book a class, student is busy");
+            }
+            if(currentUser.IsTutor && newClass.TutorId > 0 && newClass.TutorId != currentUser.Id) {
+                addModelError(nameof(newClass.TutorId), "Cannot book a class for different user");
+            }
+            if(!currentUser.IsTutor && newClass.StudentId > 0 && newClass.StudentId != currentUser.Id) {
+                addModelError(nameof(newClass.StudentId), "Cannot book a class for different user");
+            }
+
+
             if(!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
@@ -116,6 +110,22 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
             return CreatedAtRoute("DefaultApi", new {
                 id = newClass.Id
             }, newClass);
+        }
+
+
+        protected bool ClassesIntersectionValidate(Class cl, List<Class> source) {
+            if(source.Any(t => t.StartTime < cl.StartTime && t.EndTime > cl.EndTime)) {
+                return true;
+            }
+
+            if(source.Any(t => t.EndTime < cl.EndTime && t.EndTime > cl.StartTime)) {
+                return true;
+            }
+
+            if(source.Any(t => t.StartTime > cl.StartTime && t.StartTime < cl.EndTime)) {
+                return true;
+            }
+            return false;
         }
 
         private void removePropertyError(string name, string root) {

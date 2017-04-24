@@ -24,10 +24,11 @@
             $http(httpParams).then(function successCallback(response) {
                 // login successful if there's a token in the response
                 var accessToken = response.data.access_token;
-                var userIsTutor = (!!response.data.IsTutor);
                 if (accessToken) {
+                    var userIsTutor = (response.data.IsTutor == "true");
+                    var userId = response.data.UserId;
                     // store username and token in local storage to keep user logged in between page refreshes
-                    $localStorage.currentUser = { username: username, token: accessToken, userIsTutor:userIsTutor};
+                    $localStorage.currentUser = { username: username, token: accessToken, userIsTutor:userIsTutor, userId : userId};
 
                     // add jwt token to auth header for all requests made by the $http service
                     $http.defaults.headers.common.Authorization = 'Bearer ' + accessToken;
