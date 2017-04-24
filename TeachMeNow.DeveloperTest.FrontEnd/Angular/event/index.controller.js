@@ -56,14 +56,23 @@
             var partner = vm.selectedPartner.Id;
             var event;
             if (vm.isTutor) {
-                event = { subject: vm.subject, StudentId: partner, TutorId:vm.userId, startTime: vm.startTime, endTime: vm.endTime };
+                event = {
+                    subject: vm.subject, StudentId: partner,
+                    TutorId: vm.userId,
+                    startTime: vm.startTime.toISOString(),
+                    endTime: vm.endTime.toISOString()
+                };
             } else {
-                event = { subject: vm.subject, StudentId:vm.userId, TutorId: partner, startTime: vm.startTime, endTime: vm.endTime };
+                event = {
+                    subject: vm.subject, StudentId: vm.userId,
+                    TutorId: partner, startTime: vm.startTime.toISOString(),
+                    endTime: vm.endTime.toISOString()
+                };
             }
 
             classService.createClass(event).then(function (response) {
                 vm.loading = false;
-                $location.path("/class/"+response.data.Id);
+                $location.path("/class/" + response.data.Id);
             }, function errorCallback(response) {
                 vm.loading = false;
                 vm.error = "Operation was cancelled\n";
@@ -92,8 +101,8 @@
                         vm.selectedPartner = vm.partners[i];
                     }
                 }
-                vm.startTime = vm.class.StartTime;
-                vm.endTime = vm.class.EndTime;
+                vm.startTime = moment.utc(vm.class.StartTime).local().format('YYYY-MM-DD HH:mm:ss');
+                vm.endTime = moment.utc(vm.class.EndTime).local().format('YYYY-MM-DD HH:mm:ss');
 
                 vm.loading = false;
 
@@ -111,14 +120,26 @@
             var partner = vm.selectedPartner.Id;
             var event;
             if (vm.isTutor) {
-                event = {Id:vm.classId, subject: vm.subject, StudentId: partner, startTime: vm.startTime, endTime: vm.endTime };
+                event = {
+                    Id: vm.classId,
+                    subject: vm.subject,
+                    StudentId: partner,
+                    startTime: moment(vm.startTime).utc().toISOString(),
+                    endTime: moment(vm.endTime).utc().toISOString()
+                };
             } else {
-                event = {Id:vm.classId, subject: vm.subject, TutorId: partner, startTime: vm.startTime, endTime: vm.endTime };
+                event = {
+                    Id: vm.classId,
+                    subject: vm.subject,
+                    TutorId: partner,
+                    startTime: moment(vm.startTime).utc().toISOString(),
+                    endTime: moment(vm.endTime).utc().toISOString()
+                };
             }
 
             classService.updateClass(event).then(function () {
                 vm.loading = false;
-                $location.path("/class/"+vm.classId);
+                $location.path("/class/" + vm.classId);
             }, function errorCallback(response) {
                 vm.loading = false;
                 vm.error = "Operation was cancelled\n";

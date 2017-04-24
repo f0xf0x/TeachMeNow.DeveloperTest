@@ -27,7 +27,7 @@
                 <label>Start Date</label>
                 <a class="dropdown-toggle" id="dropdownStart" role="button" data-toggle="dropdown" data-target="#">
                     <div class="input-group date">
-                        <input type="text" class="form-control" ng-model="vm.startTime">
+                        <input type="text" class="form-control" value="{{vm.startTime | date:'yyyy-MM-dd HH:mm:ss'}}">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                 </a>
@@ -44,7 +44,7 @@
                 <label>End Date</label>
                 <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="#">
                     <div class="input-group date">
-                        <input type="text" class="form-control" ng-model="vm.endTime">
+                        <input type="text" class="form-control" value="{{vm.endTime | date:'yyyy-MM-dd HH:mm:ss'}}">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                     </div>
                 </a>

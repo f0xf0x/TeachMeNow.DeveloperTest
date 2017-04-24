@@ -85,6 +85,8 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
                 newClass.StudentId = currentUser.Id;
                 removePropertyError(nameof(Class.StudentId), nameof(newClass));
             }
+            newClass.StartTime = newClass.StartTime.ToLocalTime();
+            newClass.EndTime = newClass.EndTime.ToLocalTime();
 
             var tutorBusy = ClassesIntersectionValidate(newClass, db.Classes.Where(t => t.TutorId == newClass.TutorId).ToList());
 
@@ -159,10 +161,10 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Controllers {
                 return NotFound();
             }
             if (model.EndTime != default(DateTime)) {
-                dbM.EndTime = model.EndTime;
+                dbM.EndTime = model.EndTime.ToLocalTime();
             }
             if (model.StartTime != default(DateTime)) {
-                dbM.StartTime = model.StartTime;
+                dbM.StartTime = model.StartTime.ToLocalTime();
             }
 
             if (!string.IsNullOrWhiteSpace(model.Subject)) {

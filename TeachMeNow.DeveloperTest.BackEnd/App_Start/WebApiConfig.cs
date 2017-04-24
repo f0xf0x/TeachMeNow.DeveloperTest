@@ -1,5 +1,7 @@
 ﻿using System.Web.Http;
 
+using Newtonsoft.Json;
+
 //using System.Web.Http.Cors;
 
 namespace TeachMeNow.DeveloperTest.BackEnd {
@@ -21,6 +23,15 @@ namespace TeachMeNow.DeveloperTest.BackEnd {
                     id = RouteParameter.Optional
                 }
             );
+            var jsonSettings = new JsonSerializerSettings {
+                // Note the ISO format
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                DefaultValueHandling = DefaultValueHandling.Include,
+                TypeNameHandling = TypeNameHandling.Auto
+            };
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
+            config.Formatters.JsonFormatter.SerializerSettings = jsonSettings;
+            config.Formatters.JsonFormatter.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Utc;
         }
     }
 }
