@@ -5,7 +5,7 @@
         .module('app', ['ui.router', 'ngMessages', 'ngStorage', 'ui.calendar','ui.bootstrap.datetimepicker'])
         .config(config)
         .run(run);
-    app.value('baseUrl', 'http://localhost:50020');
+    app.value('baseUrl', 'http://teachmenowdevelopergrigoryevbackend.azurewebsites.net/');
 
     function config($stateProvider, $urlRouterProvider) {
         // default route
