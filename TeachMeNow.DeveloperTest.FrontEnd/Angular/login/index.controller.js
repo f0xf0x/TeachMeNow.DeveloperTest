@@ -20,11 +20,11 @@
 
         function login() {
             vm.loading = true;
-            AuthenticationService.Login(vm.email, vm.password, function (result) {
+            AuthenticationService.Login(vm.email, vm.password, function (result,response) {
                 if (result === true) {
                     $location.path('/home');
                 } else {
-                    vm.error = 'Username or password is incorrect';
+                    vm.error = 'Username or password is incorrect\n'+JSON.stringify(response.data);
                     vm.loading = false;
                 }
             });
@@ -52,7 +52,7 @@
 
             }, function errorCallback(response) {
                 vm.loading = false;
-                vm.error = response.body;
+                    vm.error = "Registration wasn't completed\n"+JSON.stringify(response.data);
             });
         }
     }

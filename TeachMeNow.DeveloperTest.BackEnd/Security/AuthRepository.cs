@@ -22,6 +22,9 @@ namespace TeachMeNow.DeveloperTest.BackEnd.Security {
                 Password = model.Password
             };
             try {
+                if(database.Users.Any(t => t.Email == entity.Email)) {
+                    throw new Exception("User with same email is already registred");
+                }
                 database.Users.Insert(entity);
 
                 return IdentityResult.Success;

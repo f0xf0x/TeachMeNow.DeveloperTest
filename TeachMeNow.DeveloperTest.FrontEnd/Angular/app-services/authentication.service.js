@@ -37,13 +37,12 @@
                     callback(true);
                 } else {
                     // execute callback with false to indicate failed login
-                    callback(false);
+                    callback(false,response);
                 }
             }, function errorCallback(response) {
                 // called asynchronously if an error occurs
                 // or server returns response with an error status.
-                console.log(response.body);
-                callback(false);
+                callback(false,response);
             });
         }
 
